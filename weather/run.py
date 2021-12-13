@@ -73,6 +73,8 @@ def parse_weather_result(url):
         raise Exception("请求天气数据报错: ", err)
 
     if data.get("success") != "1":
+        print(f"请求地址为：{url}")
+        print(f"响应体为： {data}")
         raise Exception(f"请求天气数据报错, 响应code 为 {data.get('msg', '')}， 错误信息为 {data.get('success', '')}")
 
     result = data.get('result', {})
@@ -102,6 +104,7 @@ def main():
     url = "https://www.nowapi.com/api/weather.today"
     html = request_url(url)
     test_exp_param = parse_test_exp_result(html)  # 得到测试用例的数据
+    print(f"获得测试用 token 数据：{test_exp_param}")
 
     wea_id = 2955  # 厦门湖里
     get_weather_url = f"http://api.k780.com/?app=weather.today&weaId={wea_id}&appkey={test_exp_param.get('appkey', '')}&sign={test_exp_param.get('sign', '')}&format=json"
